@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partes del Computador</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Fredoka', sans-serif; }
+    
+    @keyframes bounce-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(255, 193, 7, 0.8); }
+    }
+    
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+    
+    @keyframes star-pop {
+      0% { transform: scale(0) rotate(0deg); opacity: 0; }
+      50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
+      100% { transform: scale(1) rotate(360deg); opacity: 1; }
+    }
+    
+    .bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .wiggle { animation: wiggle 0.5s ease-in-out infinite; }
+    .star-pop { animation: star-pop 0.5s ease-out forwards; }
+    
+    .part-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .part-card:hover {
+      transform: scale(1.05);
+    }
+    
+    .letter-tile {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    .letter-tile:hover {
+      transform: scale(1.1);
+    }
+    
+    .letter-tile.selected {
+      transform: scale(0.95);
+      opacity: 0.5;
+    }
+    
+    .drop-zone {
+      transition: all 0.2s ease;
+    }
+    
+    .drop-zone.highlight {
+      background: #fef3c7;
+      border-color: #f59e0b;
+    }
+    
+    .nav-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .nav-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .nav-btn:active {
+      transform: translateY(0);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);">
+  <div id="app" class="w-full min-h-full"><!-- Pantalla de Inicio -->
+   <div id="home-screen" class="min-h-full flex flex-col items-center justify-center p-6">
+    <div class="text-center">
+     <div class="text-8xl mb-6 bounce-slow">
+      💻
+     </div>
+     <h1 id="main-title" class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">Partes del Computador</h1>
+     <p class="text-xl md:text-2xl text-white/90 mb-8">¡Aprende jugando! 🎮</p>
+     <div class="flex flex-col gap-4 max-w-sm mx-auto"><button onclick="showScreen('learn')" class="nav-btn bg-yellow-400 hover:bg-yellow-300 text-gray-800 font-bold py-4 px-8 rounded-2xl text-xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">📚</span> <span>Aprender</span> </button> <button onclick="showScreen('activity1')" class="nav-btn bg-green-400 hover:bg-green-300 text-gray-800 font-bold py-4 px-8 rounded-2xl text-xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">🎯</span> <span>Actividad 1</span> </button> <button onclick="showScreen('activity2')" class="nav-btn bg-pink-400 hover:bg-pink-300 text-gray-800 font-bold py-4 px-8 rounded-2xl text-xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">✍️</span> <span>Actividad 2</span> </button> <button onclick="showScreen('activity3')" class="nav-btn bg-blue-400 hover:bg-blue-300 text-gray-800 font-bold py-4 px-8 rounded-2xl text-xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">🧩</span> <span>Actividad 3</span> </button>
+     </div>
+    </div>
+   </div><!-- Pantalla de Aprendizaje -->
+   <div id="learn-screen" class="hidden min-h-full p-4 md:p-6">
+    <div class="max-w-6xl mx-auto"><button onclick="showScreen('home')" class="nav-btn bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-4 rounded-xl mb-4 flex items-center gap-2"> <span>←</span> <span>Volver</span> </button>
+     <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-6 drop-shadow-lg">🖥️ Conoce las Partes 🖥️</h2>
+     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"><!-- Monitor -->
+      <div class="part-card bg-white rounded-3xl p-4 md:p-6 shadow-xl text-center" onclick="showPartDetail('monitor')">
+       <div class="text-6xl md:text-8xl mb-3">
+        🖥️
+       </div>
+       <h3 class="text-xl md:text-2xl font-bold text-purple-600">MONITOR</h3>
+       <p class="text-gray-600 text-sm md:text-base mt-2">La pantalla</p>
+      </div><!-- Teclado -->
+      <div class="part-card bg-white rounded-3xl p-4 md:p-6 shadow-xl text-center" onclick="showPartDetail('teclado')">
+       <div class="text-6xl md:text-8xl mb-3">
+        ⌨️
+       </div>
+       <h3 class="text-xl md:text-2xl font-bold text-blue-600">TECLADO</h3>
+       <p class="text-gray-600 text-sm md:text-base mt-2">Para escribir</p>
+      </div><!-- Mouse -->
+      <div class="part-card bg-white rounded-3xl p-4 md:p-6 shadow-xl text-center" onclick="showPartDetail('mouse')">
+       <div class="text-6xl md:text-8xl mb-3">
+        🖱️
+       </div>
+       <h3 class="text-xl md:text-2xl font-bold text-green-600">MOUSE</h3>
+       <p class="text-gray-600 text-sm md:text-base mt-2">El ratón</p>
+      </div><!-- CPU -->
+      <div class="part-card bg-white rounded-3xl p-4 md:p-6 shadow-xl text-center" onclick="showPartDetail('cpu')">
+       <div class="text-6xl md:text-8xl mb-3">
+        🖳
+       </div>
+       <h3 class="text-xl md:text-2xl font-bold text-red-600">CPU</h3>
+       <p class="text-gray-600 text-sm md:text-base mt-2">El cerebro</p>
+      </div><!-- Bocinas -->
+      <div class="part-card bg-white rounded-3xl p-4 md:p-6 shadow-xl text-center" onclick="showPartDetail('bocinas')">
+       <div class="text-6xl md:text-8xl mb-3">
+        🔊
+       </div>
+       <h3 class="text-xl md:text-2xl font-bold text-orange-600">BOCINAS</h3>
+       <p class="text-gray-600 text-sm md:text-base mt-2">Para escuchar</p>
+      </div><!-- Cámara -->
+      <div class="part-card bg-white rounded-3xl p-4 md:p-6 shadow-xl text-center" onclick="showPartDetail('camara')">
+       <div class="text-6xl md:text-8xl mb-3">
+        📷
+       </div>
+       <h3 class="text-xl md:text-2xl font-bold text-pink-600">CÁMARA</h3>
+       <p class="text-gray-600 text-sm md:text-base mt-2">Para vernos</p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Modal de Detalle -->
+   <div id="part-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full text-center shadow-2xl">
+     <div id="modal-emoji" class="text-8xl md:text-9xl mb-4"></div>
+     <h3 id="modal-title" class="text-3xl md:text-4xl font-bold mb-4"></h3>
+     <p id="modal-desc" class="text-lg md:text-xl text-gray-600 mb-6"></p>
+     <div id="modal-letters" class="flex justify-center gap-2 mb-6 flex-wrap"></div><button onclick="closeModal()" class="nav-btn bg-purple-500 hover:bg-purple-400 text-white font-bold py-3 px-8 rounded-2xl text-xl"> ¡Entendido! ✨ </button>
+    </div>
+   </div><!-- Actividad 1: Relacionar imagen con nombre -->
+   <div id="activity1-screen" class="hidden min-h-full p-4 md:p-6">
+    <div class="max-w-4xl mx-auto"><button onclick="showScreen('home')" class="nav-btn bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-4 rounded-xl mb-4 flex items-center gap-2"> <span>←</span> <span>Volver</span> </button>
+     <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-2 drop-shadow-lg">🎯 Une la imagen con su nombre 🎯</h2>
+     <p class="text-white/80 text-center mb-6">Toca la imagen y luego toca el nombre correcto</p>
+     <div class="bg-white/95 rounded-3xl p-4 md:p-6 shadow-xl">
+      <div id="match-game" class="grid grid-cols-2 gap-4"><!-- Imágenes a la izquierda -->
+       <div class="space-y-3">
+        <h4 class="text-lg font-bold text-gray-700 text-center mb-2">Imágenes</h4>
+        <div id="match-images" class="space-y-3"></div>
+       </div><!-- Nombres a la derecha -->
+       <div class="space-y-3">
+        <h4 class="text-lg font-bold text-gray-700 text-center mb-2">Nombres</h4>
+        <div id="match-names" class="space-y-3"></div>
+       </div>
+      </div>
+      <div id="match-result" class="hidden mt-6 text-center">
+       <div class="text-6xl mb-4">
+        🎉
+       </div>
+       <p class="text-2xl font-bold text-green-600">¡Excelente trabajo!</p><button onclick="resetActivity1()" class="nav-btn mt-4 bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-6 rounded-xl"> Jugar de nuevo 🔄 </button>
+      </div>
+     </div>
+    </div>
+   </div><!-- Actividad 2: Escribir el nombre -->
+   <div id="activity2-screen" class="hidden min-h-full p-4 md:p-6">
+    <div class="max-w-4xl mx-auto"><button onclick="showScreen('home')" class="nav-btn bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-4 rounded-xl mb-4 flex items-center gap-2"> <span>←</span> <span>Volver</span> </button>
+     <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-2 drop-shadow-lg">✍️ Escribe el nombre ✍️</h2>
+     <p class="text-white/80 text-center mb-6">Arrastra las letras para formar la palabra</p>
+     <div class="bg-white/95 rounded-3xl p-4 md:p-6 shadow-xl">
+      <div id="write-game" class="text-center">
+       <div id="write-emoji" class="text-7xl md:text-8xl mb-4 bounce-slow"></div>
+       <div id="write-hint" class="text-2xl md:text-3xl font-bold text-gray-400 mb-6 tracking-widest"></div><!-- Zona de respuesta -->
+       <div id="answer-zone" class="flex justify-center gap-2 mb-6 min-h-16 flex-wrap"></div><!-- Letras disponibles -->
+       <div id="letter-bank" class="flex justify-center gap-2 flex-wrap mb-6"></div>
+       <div class="flex justify-center gap-4"><button onclick="clearWriteAnswer()" class="nav-btn bg-gray-400 hover:bg-gray-300 text-white font-bold py-2 px-6 rounded-xl"> Borrar 🗑️ </button> <button onclick="checkWriteAnswer()" class="nav-btn bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-6 rounded-xl"> Verificar ✓ </button>
+       </div>
+       <div id="write-feedback" class="mt-4 text-xl font-bold"></div>
+       <div id="write-navigation" class="mt-6 flex justify-center gap-4"><button onclick="prevWriteWord()" class="nav-btn bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded-xl"> ← Anterior </button> <span id="write-counter" class="text-gray-600 font-bold py-2 px-4"></span> <button onclick="nextWriteWord()" class="nav-btn bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 rounded-xl"> Siguiente → </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Actividad 3: Identificar la primera letra -->
+   <div id="activity3-screen" class="hidden min-h-full p-4 md:p-6">
+    <div class="max-w-4xl mx-auto"><button onclick="showScreen('home')" class="nav-btn bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-4 rounded-xl mb-4 flex items-center gap-2"> <span>←</span> <span>Volver</span> </button>
+     <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-2 drop-shadow-lg">🧩 ¿Con qué letra empieza? 🧩</h2>
+     <p class="text-white/80 text-center mb-6">Selecciona la primera letra de cada palabra</p>
+     <div class="bg-white/95 rounded-3xl p-4 md:p-6 shadow-xl">
+      <div id="letter-game" class="text-center">
+       <div id="letter-emoji" class="text-7xl md:text-8xl mb-4 bounce-slow"></div>
+       <div id="letter-word" class="text-3xl md:text-4xl font-bold text-gray-700 mb-6"></div>
+       <div id="letter-options" class="flex justify-center gap-4 flex-wrap mb-6"></div>
+       <div id="letter-feedback" class="text-xl font-bold mb-4"></div>
+       <div id="letter-score" class="text-lg text-gray-600 mb-4"></div><button id="letter-next-btn" onclick="nextLetterQuestion()" class="hidden nav-btn bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-6 rounded-xl"> Siguiente → </button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Configuración por defecto
+    const defaultConfig = {
+      main_title: 'Partes del Computador',
+      background_color: '#667eea',
+      accent_color: '#fbbf24',
+      text_color: '#ffffff',
+      card_color: '#ffffff',
+      button_color: '#8b5cf6',
+      font_family: 'Fredoka'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Datos de las partes del computador
+    const computerParts = {
+      monitor: {
+        emoji: '🖥️',
+        name: 'MONITOR',
+        desc: 'Es la pantalla donde vemos todo. ¡Como una televisión mágica!',
+        color: 'purple'
+      },
+      teclado: {
+        emoji: '⌨️',
+        name: 'TECLADO',
+        desc: 'Tiene muchas teclas con letras y números. ¡Sirve para escribir!',
+        color: 'blue'
+      },
+      mouse: {
+        emoji: '🖱️',
+        name: 'MOUSE',
+        desc: 'Es el ratoncito que movemos para señalar cosas en la pantalla.',
+        color: 'green'
+      },
+      cpu: {
+        emoji: '🖳',
+        name: 'CPU',
+        desc: 'Es el cerebro del computador. ¡Piensa muy rápido!',
+        color: 'red'
+      },
+      bocinas: {
+        emoji: '🔊',
+        name: 'BOCINAS',
+        desc: 'Por aquí sale el sonido. ¡Escuchamos música y videos!',
+        color: 'orange'
+      },
+      camara: {
+        emoji: '📷',
+        name: 'CÁMARA',
+        desc: 'Nos permite vernos y hacer videollamadas. ¡Sonríe!',
+        color: 'pink'
+      }
+    };
+    
+    // Variables de estado
+    let selectedImage = null;
+    let matchedPairs = 0;
+    let currentWriteIndex = 0;
+    let currentAnswer = [];
+    let letterScore = 0;
+    let letterTotal = 0;
+    let currentLetterIndex = 0;
+    
+    const writeWords = ['MONITOR', 'TECLADO', 'MOUSE', 'CPU', 'BOCINAS', 'CÁMARA'];
+    const writeEmojis = ['🖥️', '⌨️', '🖱️', '🖳', '🔊', '📷'];
+    
+    // Funciones de navegación
+    function showScreen(screenId) {
+      const screens = ['home', 'learn', 'activity1', 'activity2', 'activity3'];
+      screens.forEach(id => {
+        document.getElementById(id + '-screen').classList.add('hidden');
+      });
+      document.getElementById(screenId + '-screen').classList.remove('hidden');
+      
+      if (screenId === 'activity1') initActivity1();
+      if (screenId === 'activity2') initActivity2();
+      if (screenId === 'activity3') initActivity3();
+    }
+    
+    // Modal de detalle de parte
+    function showPartDetail(partKey) {
+      const part = computerParts[partKey];
+      document.getElementById('modal-emoji').textContent = part.emoji;
+      document.getElementById('modal-title').textContent = part.name;
+      document.getElementById('modal-title').className = `text-3xl md:text-4xl font-bold mb-4 text-${part.color}-600`;
+      document.getElementById('modal-desc').textContent = part.desc;
+      
+      // Mostrar letras
+      const lettersContainer = document.getElementById('modal-letters');
+      lettersContainer.innerHTML = '';
+      part.name.split('').forEach((letter, i) => {
+        const span = document.createElement('span');
+        span.className = `inline-block bg-${part.color}-100 text-${part.color}-600 text-2xl md:text-3xl font-bold w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center star-pop`;
+        span.style.animationDelay = `${i * 0.1}s`;
+        span.textContent = letter;
+        lettersContainer.appendChild(span);
+      });
+      
+      document.getElementById('part-modal').classList.remove('hidden');
+    }
+    
+    function closeModal() {
+      document.getElementById('part-modal').classList.add('hidden');
+    }
+    
+    // Actividad 1: Relacionar
+    function initActivity1() {
+      matchedPairs = 0;
+      selectedImage = null;
+      document.getElementById('match-result').classList.add('hidden');
+      
+      const parts = Object.keys(computerParts);
+      const shuffledParts = [...parts].sort(() => Math.random() - 0.5);
+      const shuffledNames = [...parts].sort(() => Math.random() - 0.5);
+      
+      const imagesContainer = document.getElementById('match-images');
+      const namesContainer = document.getElementById('match-names');
+      
+      imagesContainer.innerHTML = '';
+      namesContainer.innerHTML = '';
+      
+      shuffledParts.forEach(key => {
+        const part = computerParts[key];
+        const div = document.createElement('div');
+        div.className = 'match-image bg-gray-100 hover:bg-yellow-100 rounded-xl p-3 text-center cursor-pointer transition-all border-4 border-transparent';
+        div.dataset.part = key;
+        div.innerHTML = `<span class="text-4xl">${part.emoji}</span>`;
+        div.onclick = () => selectImage(key, div);
+        imagesContainer.appendChild(div);
+      });
+      
+      shuffledNames.forEach(key => {
+        const part = computerParts[key];
+        const div = document.createElement('div');
+        div.className = 'match-name bg-gray-100 hover:bg-yellow-100 rounded-xl p-3 text-center cursor-pointer transition-all border-4 border-transparent';
+        div.dataset.part = key;
+        div.innerHTML = `<span class="text-lg font-bold text-gray-700">${part.name}</span>`;
+        div.onclick = () => selectName(key, div);
+        namesContainer.appendChild(div);
+      });
+    }
+    
+    function selectImage(key, element) {
+      document.querySelectorAll('.match-image').forEach(el => {
+        el.classList.remove('border-yellow-400', 'bg-yellow-100');
+      });
+      element.classList.add('border-yellow-400', 'bg-yellow-100');
+      selectedImage = key;
+    }
+    
+    function selectName(key, element) {
+      if (!selectedImage) return;
+      
+      if (selectedImage === key) {
+        element.classList.add('bg-green-200', 'border-green-400');
+        element.classList.remove('cursor-pointer');
+        element.onclick = null;
+        
+        const imageEl = document.querySelector(`.match-image[data-part="${key}"]`);
+        imageEl.classList.add('bg-green-200', 'border-green-400');
+        imageEl.classList.remove('cursor-pointer');
+        imageEl.onclick = null;
+        
+        matchedPairs++;
+        selectedImage = null;
+        
+        if (matchedPairs === Object.keys(computerParts).length) {
+          setTimeout(() => {
+            document.getElementById('match-result').classList.remove('hidden');
+          }, 500);
+        }
+      } else {
+        element.classList.add('bg-red-200', 'wiggle');
+        setTimeout(() => {
+          element.classList.remove('bg-red-200', 'wiggle');
+        }, 500);
+      }
+    }
+    
+    function resetActivity1() {
+      initActivity1();
+    }
+    
+    // Actividad 2: Escribir
+    function initActivity2() {
+      currentWriteIndex = 0;
+      loadWriteWord();
+    }
+    
+    function loadWriteWord() {
+      const word = writeWords[currentWriteIndex];
+      const emoji = writeEmojis[currentWriteIndex];
+      currentAnswer = [];
+      
+      document.getElementById('write-emoji').textContent = emoji;
+      document.getElementById('write-hint').textContent = word.split('').map((l, i) => i === 0 ? l : '_').join(' ');
+      document.getElementById('write-feedback').textContent = '';
+      document.getElementById('write-counter').textContent = `${currentWriteIndex + 1} / ${writeWords.length}`;
+      
+      // Zona de respuesta
+      const answerZone = document.getElementById('answer-zone');
+      answerZone.innerHTML = '';
+      word.split('').forEach((_, i) => {
+        const slot = document.createElement('div');
+        slot.className = 'drop-zone w-10 h-12 md:w-12 md:h-14 border-3 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-2xl font-bold text-purple-600';
+        slot.dataset.index = i;
+        answerZone.appendChild(slot);
+      });
+      
+      // Banco de letras (mezcladas)
+      const letterBank = document.getElementById('letter-bank');
+      letterBank.innerHTML = '';
+      const letters = word.split('').sort(() => Math.random() - 0.5);
+      letters.forEach((letter, i) => {
+        const tile = document.createElement('div');
+        tile.className = 'letter-tile bg-purple-500 text-white w-10 h-12 md:w-12 md:h-14 rounded-lg flex items-center justify-center text-2xl font-bold shadow-md';
+        tile.textContent = letter;
+        tile.dataset.letter = letter;
+        tile.dataset.originalIndex = i;
+        tile.onclick = () => addLetter(tile);
+        letterBank.appendChild(tile);
+      });
+    }
+    
+    function addLetter(tile) {
+      if (tile.classList.contains('selected')) return;
+      
+      const slots = document.querySelectorAll('.drop-zone');
+      const emptySlot = Array.from(slots).find(slot => !slot.textContent);
+      
+      if (emptySlot) {
+        emptySlot.textContent = tile.textContent;
+        emptySlot.dataset.tileIndex = tile.dataset.originalIndex;
+        tile.classList.add('selected');
+        currentAnswer.push({ letter: tile.textContent, tileIndex: tile.dataset.originalIndex });
+      }
+    }
+    
+    function clearWriteAnswer() {
+      currentAnswer = [];
+      document.querySelectorAll('.drop-zone').forEach(slot => {
+        slot.textContent = '';
+        delete slot.dataset.tileIndex;
+      });
+      document.querySelectorAll('.letter-tile').forEach(tile => {
+        tile.classList.remove('selected');
+      });
+      document.getElementById('write-feedback').textContent = '';
+    }
+    
+    function checkWriteAnswer() {
+      const word = writeWords[currentWriteIndex];
+      const slots = document.querySelectorAll('.drop-zone');
+      const answer = Array.from(slots).map(slot => slot.textContent).join('');
+      
+      const feedback = document.getElementById('write-feedback');
+      if (answer === word) {
+        feedback.textContent = '¡Muy bien! 🎉⭐';
+        feedback.className = 'mt-4 text-xl font-bold text-green-600';
+        slots.forEach(slot => slot.classList.add('bg-green-100'));
+      } else {
+        feedback.textContent = 'Intenta de nuevo 💪';
+        feedback.className = 'mt-4 text-xl font-bold text-orange-500';
+      }
+    }
+    
+    function prevWriteWord() {
+      if (currentWriteIndex > 0) {
+        currentWriteIndex--;
+        loadWriteWord();
+      }
+    }
+    
+    function nextWriteWord() {
+      if (currentWriteIndex < writeWords.length - 1) {
+        currentWriteIndex++;
+        loadWriteWord();
+      }
+    }
+    
+    // Actividad 3: Primera letra
+    function initActivity3() {
+      letterScore = 0;
+      letterTotal = 0;
+      currentLetterIndex = 0;
+      loadLetterQuestion();
+    }
+    
+    function loadLetterQuestion() {
+      const parts = Object.values(computerParts);
+      const part = parts[currentLetterIndex];
+      const firstLetter = part.name[0];
+      
+      document.getElementById('letter-emoji').textContent = part.emoji;
+      document.getElementById('letter-word').innerHTML = `<span class="text-purple-600 text-5xl">?</span>${part.name.slice(1)}`;
+      document.getElementById('letter-feedback').textContent = '';
+      document.getElementById('letter-next-btn').classList.add('hidden');
+      
+      // Generar opciones (la correcta + 3 aleatorias)
+      const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+      const wrongLetters = allLetters.filter(l => l !== firstLetter).sort(() => Math.random() - 0.5).slice(0, 3);
+      const options = [firstLetter, ...wrongLetters].sort(() => Math.random() - 0.5);
+      
+      const optionsContainer = document.getElementById('letter-options');
+      optionsContainer.innerHTML = '';
+      options.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.className = 'letter-tile bg-purple-500 hover:bg-purple-400 text-white w-16 h-16 md:w-20 md:h-20 rounded-2xl text-3xl md:text-4xl font-bold shadow-lg';
+        btn.textContent = letter;
+        btn.onclick = () => checkLetterAnswer(letter, firstLetter, btn);
+        optionsContainer.appendChild(btn);
+      });
+      
+      updateLetterScore();
+    }
+    
+    function checkLetterAnswer(selected, correct, btn) {
+      letterTotal++;
+      const feedback = document.getElementById('letter-feedback');
+      const buttons = document.querySelectorAll('#letter-options button');
+      
+      buttons.forEach(b => b.onclick = null);
+      
+      if (selected === correct) {
+        letterScore++;
+        feedback.textContent = '¡Correcto! 🌟';
+        feedback.className = 'text-xl font-bold text-green-600';
+        btn.classList.add('bg-green-500');
+        document.getElementById('letter-word').innerHTML = `<span class="text-green-600 text-5xl">${correct}</span>${computerParts[Object.keys(computerParts)[currentLetterIndex]].name.slice(1)}`;
+      } else {
+        feedback.textContent = `Era la letra ${correct} 📚`;
+        feedback.className = 'text-xl font-bold text-orange-500';
+        btn.classList.add('bg-red-400');
+        buttons.forEach(b => {
+          if (b.textContent === correct) b.classList.add('bg-green-500', 'wiggle');
+        });
+      }
+      
+      updateLetterScore();
+      
+      if (currentLetterIndex < Object.keys(computerParts).length - 1) {
+        document.getElementById('letter-next-btn').classList.remove('hidden');
+      } else {
+        setTimeout(() => {
+          feedback.textContent = `¡Terminaste! Aciertos: ${letterScore}/${letterTotal} 🎉`;
+        }, 1000);
+      }
+    }
+    
+    function nextLetterQuestion() {
+      currentLetterIndex++;
+      loadLetterQuestion();
+    }
+    
+    function updateLetterScore() {
+      document.getElementById('letter-score').textContent = `Puntos: ${letterScore} / ${letterTotal}`;
+    }
+    
+    // Inicialización del SDK
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, #764ba2 50%, #f093fb 100%)`;
+    }
+    
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+          },
+          {
+            get: () => cfg.card_color || defaultConfig.card_color,
+            set: (v) => { cfg.card_color = v; window.elementSdk.setConfig({ card_color: v }); }
+          },
+          {
+            get: () => cfg.accent_color || defaultConfig.accent_color,
+            set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+          },
+          {
+            get: () => cfg.button_color || defaultConfig.button_color,
+            set: (v) => { cfg.button_color = v; window.elementSdk.setConfig({ button_color: v }); }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || defaultConfig.font_family,
+          set: (v) => { cfg.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+        },
+        fontSizeable: undefined
+      };
+    }
+    
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['main_title', cfg.main_title || defaultConfig.main_title]
+      ]);
+    }
+    
+    // Inicializar SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d16e95114fcd7f5',t:'MTc3MTY4MzkwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
